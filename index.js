@@ -1,7 +1,7 @@
 'use strict';
 
-var React = require('react-native');
-var { StyleSheet, Text, View, TextInput, Animated } = React;
+var React = require('react');
+var { StyleSheet, Text, View, TextInput, Animated } = require('react-native');
 
 var FloatingLabel = React.createClass({
   getInitialState: function() {
