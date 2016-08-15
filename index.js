@@ -98,6 +98,7 @@ var FloatLabelTextField = React.createClass({
                 style={[styles.valueText]}
                 defaultValue={this.props.defaultValue}
                 value={this.state.text}
+                editable={this.props.editable}
                 maxLength={this.props.maxLength}
                 selectionColor={this.props.selectionColor}
                 onFocus={this.setFocus}
