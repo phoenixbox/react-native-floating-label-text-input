@@ -1,7 +1,13 @@
 'use strict';
 
 var React = require('react');
-var { StyleSheet, Text, View, TextInput, Animated } = require('react-native');
+var {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Animated
+} = require('react-native');
 
 var FloatingLabel = React.createClass({
   getInitialState: function() {
@@ -83,19 +89,31 @@ var FloatLabelTextField = React.createClass({
     };
   },
 
+  containerStyles() {
+    let containerStyles = [styles.container, this.props.styles.containerStyles];
+    if (this.props.error) {
+      containerStyles = [styles.container, this.props.styles.containerStyles, {
+        borderColor: this.props.error.styles.borderColor
+      }];
+    }
+
+    return containerStyles;
+  },
+
   render: function() {
+    const labelStyle = this.props.styles.fieldLabel || styles.fieldLabel;
+
     return(
-      <View style={styles.container}>
+      <View style={this.containerStyles()}>
         <View style={styles.viewContainer}>
-          <View style={styles.paddingView}></View>
           <View style={[styles.fieldContainer, this.withBorder()]}>
             <FloatingLabel visible={this.state.text}>
-              <Text style={[styles.fieldLabel, this.labelStyle()]}>{this.placeholderValue()}</Text>
+              <Text style={[labelStyle, this.labelStyle()]}>{this.placeholderValue()}</Text>
             </FloatingLabel>
             <TextFieldHolder withValue={this.state.text}>
               <TextInput
                 placeholder={this.props.placeholder}
-                style={[styles.valueText]}
+                style={[styles.valueText, this.props.styles.valueText]}
                 defaultValue={this.props.defaultValue}
                 value={this.state.text}
                 editable={this.props.editable}
@@ -135,7 +153,7 @@ var FloatLabelTextField = React.createClass({
 
   labelStyle: function() {
     if (this.state.focussed) {
-      return styles.focussed;
+      return this.props.styles.focussed || styles.focussed;
     }
   },
 
@@ -164,16 +182,14 @@ var FloatLabelTextField = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 45,
+    height: 55,
     backgroundColor: 'white',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   viewContainer: {
     flex: 1,
+    padding: 5,
     flexDirection: 'row'
-  },
-  paddingView: {
-    width: 15
   },
   floatingLabel: {
     position: 'absolute',
@@ -191,8 +207,6 @@ var styles = StyleSheet.create({
     position: 'relative'
   },
   withBorder: {
-    borderBottomWidth: 1 / 2,
-    borderColor: '#C8C7CC',
   },
   valueText: {
     height: 20,
